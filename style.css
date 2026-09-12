@@ -1525,6 +1525,19 @@ background:
 
 }
 
+
+.contact-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+    font-size: 14px;
+    color: #a0a0b0;
+}
+
+
 /* =========================================
 FOOTER
 ========================================= */
