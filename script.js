@@ -1,86 +1,144 @@
-
-// =========================================
-// Smooth navigation
-// =========================================
+/* =========================================
+SMOOTH SCROLLING
+========================================= */
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
 
-    link.addEventListener("click", function (event) {
 
-        const targetId = this.getAttribute("href");
+link.addEventListener("click", event => {
 
-        if (targetId === "#") return;
+    const targetId = link.getAttribute("href");
 
-        const target = document.querySelector(targetId);
+    if (!targetId || targetId === "#") {
+        return;
+    }
 
-        if (target) {
+    const target = document.querySelector(targetId);
 
-            event.preventDefault();
+    if (!target) {
+        return;
+    }
 
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+    event.preventDefault();
 
-        }
-
+    target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
     });
 
 });
 
 
-// =========================================
-// Reveal elements when scrolling
-// =========================================
+});
+
+/* =========================================
+SCROLL REVEAL
+========================================= */
 
 const revealElements = document.querySelectorAll(
-    ".section, .project-card, .skill-card, .timeline-item"
+".about-grid, " +
+".skill-card, " +
+".experience-card, " +
+".project-card, " +
+".timeline-item, " +
+".contact-content"
 );
 
-const observer = new IntersectionObserver(
+if ("IntersectionObserver" in window) {
+
+
+const revealObserver = new IntersectionObserver(
     entries => {
 
         entries.forEach(entry => {
 
-            if (entry.isIntersecting) {
-
-                entry.target.classList.add("visible");
-
-                observer.unobserve(entry.target);
-
+            if (!entry.isIntersecting) {
+                return;
             }
+
+            entry.target.classList.add("visible");
+
+            revealObserver.unobserve(entry.target);
 
         });
 
     },
     {
-        threshold: 0.12
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
     }
 );
 
 
-revealElements.forEach(element => {
+revealElements.forEach((element, index) => {
+
+    /*
+     * Small stagger effect for cards.
+     * Each card appears slightly after the previous one.
+     */
+
+    if (
+        element.classList.contains("skill-card") ||
+        element.classList.contains("project-card")
+    ) {
+        element.style.transitionDelay =
+            `${(index % 4) * 80}ms`;
+    }
 
     element.classList.add("reveal");
 
-    observer.observe(element);
+    revealObserver.observe(element);
 
 });
 
 
-// =========================================
-// Current year in footer
-// =========================================
+} else {
+
+
+/*
+ * Fallback for older browsers.
+ * If IntersectionObserver isn't supported,
+ * simply show all elements.
+ */
+
+revealElements.forEach(element => {
+    element.classList.add("visible");
+});
+
+
+}
+
+/* =========================================
+CURRENT YEAR
+========================================= */
 
 const footerText = document.querySelector("footer p");
 
 if (footerText) {
 
-    const currentYear = new Date().getFullYear();
 
-    footerText.innerHTML =
-        `© ${currentYear} Hari Babu R. Built with HTML, CSS & JavaScript.`;
+const currentYear =
+    new Date().getFullYear();
+
+footerText.textContent =
+    `© ${currentYear} Hari Babu R. Built with HTML, CSS & JavaScript.`;
+
 
 }
 
+/* =========================================
+EXTERNAL LINKS
+========================================= */
+
+document
+.querySelectorAll('a[target="_blank"]')
+.forEach(link => {
+
+
+    link.setAttribute(
+        "rel",
+        "noopener noreferrer"
+    );
+
+});
 
