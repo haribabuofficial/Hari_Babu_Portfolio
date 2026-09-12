@@ -1,4 +1,4 @@
-# hari_babu_portfolio
+# Hari_Babu_Portfolio
 My professional profile and AI/ML engineering journey.
 
 # Hi, I'm Hari Babu Ramachandran 👋
