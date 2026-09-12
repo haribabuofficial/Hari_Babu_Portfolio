@@ -1,4 +1,4 @@
-```javascript
+
 // =========================================
 // Smooth navigation
 // =========================================
@@ -82,5 +82,5 @@ if (footerText) {
         `© ${currentYear} Hari Babu R. Built with HTML, CSS & JavaScript.`;
 
 }
-```
+
 
